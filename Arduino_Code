@@ -1,0 +1,41 @@
+int ldrPin = A5; // LDR module Analog pin is connected to the A5 pin of Arduino
+int gatePin = 9; // D9 pin is connected to the MOSFET gate terminal
+
+int ldrValue = 0;
+int pwmValue = 0;
+
+void setup() {
+  pinMode(gatePin, OUTPUT); // Initialize the gate pin as an output
+  Serial.begin(9600);
+}
+
+void loop() {
+  ldrValue = analogRead(ldrPin);
+
+  // Map LDR ranges to PWM values
+  if (ldrValue <= 800) {
+    pwmValue = 0;         // 0% PWM for OFF condition
+  } 
+  else if (ldrValue <= 930) {
+    pwmValue = 77;        // 30% PWM ≈ 77, For 30% Brightness of LED
+  } 
+  else if (ldrValue <= 977) {
+    pwmValue = 128;       // 50% PWM ≈ 128, For 50% Brightness of LED
+  } 
+  else if (ldrValue <= 989) {
+    pwmValue = 255;       // 100% PWM = 255, For Full Brightness of LED
+  } 
+  else {
+    pwmValue = 255;       // Anything above 989 also 100%
+  }
+
+  analogWrite(gatePin, pwmValue); // Output PWM to MOSFET gate
+
+  Serial.print("LDR Value: ");
+  Serial.print(ldrValue);
+  Serial.print("  -> PWM: ");
+  Serial.print(pwmValue * 100 / 255); // Display in %
+  Serial.println("%");
+
+  delay(1000);
+}
