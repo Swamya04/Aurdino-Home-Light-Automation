@@ -1,0 +1,21 @@
+// Controling/Automating Home Light with the help of PIR sensor and Arduino Microcontroller
+// Set pin numbers
+int sensorPin = 5;      // PIR_Sensor pin is connected to the D5 pin of the Arduino Microcontroller
+int relay = 10;        // Relay module pin is connected to the D10 pin of the Arduino Microcontroller
+
+void setup() {
+  // Set the relay module in OUTPUT Mode
+  pinMode(relay, OUTPUT);
+  // Set the PIR sensor module in INPUT Mode
+  pinMode(sensor, INPUT);
+}
+void loop() {
+  // if sensor = HIGH then turn on the relay
+  if(digitalRead(sensorPin) == HIGH) (
+    // Turn ON the LED
+    digitalWrite(relay, HIGH);
+  } else {
+  // Turn OFF the relay
+  digitalWrite(relay, LOW);
+  }
+}
